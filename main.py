@@ -20,6 +20,7 @@ api.authenticate()
 
 
 # Download dataset from Kaggle
+os.makedirs('data', exist_ok=True)
 api.dataset_download_files(DATASET, path='data_reemplazar', unzip=True)
 
 

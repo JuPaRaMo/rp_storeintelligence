@@ -15,7 +15,7 @@ jobs:
       KAGGLE_DATASET: gpreda/covid-world-vaccination-progress
       KAGGLE_DATE_COLUMN: date
       AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
-      AZURE_CONTAINER: nombre-de-tu-contenedor
+      AZURE_CONTAINER: cnstoreintelligencedata-kaggle
 
     steps:
       - name: Checkout del repositorio

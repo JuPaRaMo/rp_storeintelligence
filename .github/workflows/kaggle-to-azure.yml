@@ -1,0 +1,31 @@
+name: Kaggle to Azure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install kaggle pandas azure-storage-blob
+
+      - name: Ejecutar el script
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          KAGGLE_DATASET: ${{ secrets.KAGGLE_DATASET }}
+          KAGGLE_DATE_COLUMN: ${{ secrets.KAGGLE_DATE_COLUMN }}
+          AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+          AZURE_CONTAINER: ${{ secrets.AZURE_CONTAINER }}
+        run: python main.py

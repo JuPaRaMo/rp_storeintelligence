@@ -25,8 +25,12 @@ api.dataset_download_files(DATASET, path='data_reemplazar', unzip=True)
 
 
 # Leer CSV
-csv_file = [f for f in os.listdir('data') if f.endswith('.csv')][0]
-df = pd.read_csv(f'data/{csv_file}', parse_dates=[DATE_COLUMN])
+csv_files = [f for f in os.listdir('data') if f.endswith('.csv')]
+if not csv_files:
+    raise FileNotFoundError("No se encontró ningún archivo CSV en la carpeta 'data'. Verifica si el dataset se descargó correctamente.")
+
+csv_path = os.path.join('data', csv_files[0])
+df = pd.read_csv(csv_path, parse_dates=[DATE_COLUMN])
 
 
 # Connection to Azure

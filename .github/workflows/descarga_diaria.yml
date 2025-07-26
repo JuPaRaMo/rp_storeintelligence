@@ -1,0 +1,34 @@
+name: Descarga diaria de Kaggle y carga en Azure
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Ejecuta todos los días a las 3:00 AM UTC
+  workflow_dispatch:     # Permite ejecución manual desde GitHub
+
+jobs:
+  descarga-y-carga:
+    runs-on: ubuntu-latest
+
+    env:
+      KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+      KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+      KAGGLE_DATASET: gpreda/covid-world-vaccination-progress
+      KAGGLE_DATE_COLUMN: date
+      AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      AZURE_CONTAINER: nombre-de-tu-contenedor
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install kaggle pandas azure-storage-blob
+
+      - name: Ejecutar script principal
+        run: python main.py
